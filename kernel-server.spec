@@ -4,10 +4,10 @@
 Name:          kernel-server
 Summary:       The Linux Kernel for Mandriva systems
 License:       GPLv2
-Version:       3.1.4
+Version:       3.1.5
 Release:       %mkrel 1.1
 URL:           http://www.kernel.org
-Source:        kernel-server-3.1.4-1.tar.bz2
+Source:        kernel-server-3.1.5-1.tar.bz2
 ExclusiveArch: x86_64 
 BuildRoot:     %{_tmppath}/%{name}-%{version}-root
 
@@ -57,12 +57,12 @@ This package provides the kernel's debug information required
 by some binary object tools like kgdb, perf, etc...
 
 %prep
-%setup -q -n kernel-server-3.1.4-1
+%setup -q -n kernel-server-3.1.5-1
 
 %build
 make defconfig
 make -s kernelrelease
-test $(make -s kernelrelease) = 3.1.4-1.1-server
+test $(make -s kernelrelease) = 3.1.5-1.1-server
 make %{?_smp_mflags}
 
 %install
@@ -70,24 +70,24 @@ make -s INSTALL_MOD_PATH=%{buildroot} modules_install
 find %{buildroot} -name \*.ko -exec chmod u+x {} \;
 
 mkdir -p %{buildroot}/boot
-cp %{bzImage} %{buildroot}/boot/vmlinuz-3.1.4-1.1-server
-cp System.map %{buildroot}/boot/System.map-3.1.4-1.1-server
-cp .config    %{buildroot}/boot/config-3.1.4-1.1-server
-ln -snf /usr/src/devel/3.1.4-1.1-server %{buildroot}/lib/modules/3.1.4-1.1-server/build
-ln -snf build %{buildroot}/lib/modules/3.1.4-1.1-server/source
+cp %{bzImage} %{buildroot}/boot/vmlinuz-3.1.5-1.1-server
+cp System.map %{buildroot}/boot/System.map-3.1.5-1.1-server
+cp .config    %{buildroot}/boot/config-3.1.5-1.1-server
+ln -snf /usr/src/devel/3.1.5-1.1-server %{buildroot}/lib/modules/3.1.5-1.1-server/build
+ln -snf build %{buildroot}/lib/modules/3.1.5-1.1-server/source
 
-mkdir -p %{buildroot}/usr/src/devel/3.1.4-1.1-server
+mkdir -p %{buildroot}/usr/src/devel/3.1.5-1.1-server
 cat develfiles-%asmarch.list >>develfiles.list
-rsync -ar --files-from=develfiles.list . %{buildroot}/usr/src/devel/3.1.4-1.1-server
+rsync -ar --files-from=develfiles.list . %{buildroot}/usr/src/devel/3.1.5-1.1-server
 
 %post -n kernel-server
-/sbin/installkernel %{instkern_opts} 3.1.4-1.1-server
+/sbin/installkernel %{instkern_opts} 3.1.5-1.1-server
 
 %preun -n kernel-server
-/sbin/installkernel -R 3.1.4-1.1-server
+/sbin/installkernel -R 3.1.5-1.1-server
 
 %postun -n kernel-server
-/sbin/kernel_remove_initrd 3.1.4-1.1-server
+/sbin/kernel_remove_initrd 3.1.5-1.1-server
 
 %clean
 rm -rf %{buildroot}
@@ -95,19 +95,19 @@ rm -rf %{buildroot}
 %files -n kernel-server
 %defattr (-, root, root)
 %dir /lib/modules
-/lib/modules/3.1.4-1.1-server
+/lib/modules/3.1.5-1.1-server
 /boot
 
 %files -n kernel-server-devel
 %defattr (-, root, root)
-/usr/src/devel/3.1.4-1.1-server
+/usr/src/devel/3.1.5-1.1-server
 
 %files -n kernel-server-debuginfo -f debugfiles.list
 %defattr (-, root, root)
 
 %changelog
-* Thu Dec 08 2011 Franck Bui <franck.bui@mandriva.com> 3.1.4-1.1-server
-  + Mandriva Release v3.1.4-1
+* Sat Dec 10 2011 Franck Bui <franck.bui@mandriva.com> 3.1.5-1.1-server
+  + Mandriva Release v3.1.5-1
   + pci: Rework ASPM disable code
   + usb: ehci: make HC see up-to-date qh/qtd descriptor ASAP
   + btrfs: btrfs_calc_avail_data_space cope with no read/write devices V2
