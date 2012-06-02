@@ -5,7 +5,7 @@
 %define version		3.4.0
 %define src_uname_r	3.4.0-2
 %define source_release	2
-%define build_release	1%{nil}
+%define build_release	2%{nil}
 %define archive		kernel-server-3.4.0-2.1
 
 %define build_srpm	1
@@ -49,7 +49,7 @@ Source3:		%{uname_r}-develfiles.list
 Source4:		%{uname_r}-output-develfiles.list
 Requires:		kernel-firmware
 Requires(pre):		bootloader-utils
-Requires(pre):		mkinitrd
+Requires(pre):		mkinitrd-command
 Requires(pre):		module-init-tools
 BuildRequires:		module-init-tools
 %if %no_source
