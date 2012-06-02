@@ -310,8 +310,3 @@ rm -rf %{buildroot}
 %defattr (-, root, root)
 %{debuginfodir}/lib/modules/%{uname_r}/vmlinux
 %endif
-
-%changelog
-* Tue May 22 2012 Franck Bui <franck.bui@mandriva.com> 3.4.0-2.1-server
-  + Mandriva Release v3.4-2
-  + radio-rtrack: fix build error (implicit declaration of function 'kzalloc')
