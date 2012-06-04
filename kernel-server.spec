@@ -20,7 +20,7 @@
 
 # binary specific macros
 %define flavour		server
-%define uname_r		3.4.0-2.1-server
+%define uname_r		3.4.0-2.2-server
 %define exclusive	x86_64
 %define kdevel_path	/usr/src/devel/%{uname_r}
 
