@@ -5,7 +5,7 @@
 %define version		3.4.1
 %define src_uname_r	3.4.1-1
 %define source_release	1
-%define build_release	1%{nil}
+%define build_release	2%{nil}
 %define archive		kernel-server-3.4.1-1.1
 
 %define build_srpm	1
@@ -20,7 +20,7 @@
 
 # binary specific macros
 %define flavour		server
-%define uname_r		3.4.1-1.1-server
+%define uname_r		3.4.1-1.2-server
 %define exclusive	x86_64
 %define kdevel_path	/usr/src/devel/%{uname_r}
 
@@ -28,6 +28,11 @@
 %define asm		x86_64
 %define asmarch		x86
 %endif
+
+# Parallelize xargs invocations on smp machines
+%define kxargs xargs %([ -z "$RPM_BUILD_NCPUS" ] \\\
+	&& RPM_BUILD_NCPUS="`/usr/bin/getconf _NPROCESSORS_ONLN`"; \\\
+	[ "$RPM_BUILD_NCPUS" -gt 1 ] && echo "-P $RPM_BUILD_NCPUS")
 
 %bcond_without devel
 %bcond_without debuginfo
@@ -273,6 +278,11 @@ debugedit -b %{_builddir} -d /usr/src/debug \
 	%{buildroot}%{debuginfodir}/lib/modules/%{uname_r}/vmlinux
 %endif
 %endif
+
+modules=`find %{buildroot}/lib/modules/%{uname_r} -name "*.ko*"`
+echo $modules | %kxargs /sbin/modinfo \
+		| perl -lne 'print "$name\t$1" if $name && /^description:\s*(.*)/; $name = $1 if m!^filename:\s*(.*)\.k?o!; $name =~ s!.*/!!' \
+		> %{buildroot}/lib/modules/%{uname_r}/modules.description
 
 %clean
 rm -rf %{buildroot}
