@@ -54,7 +54,7 @@ Source3:		%{uname_r}-develfiles.list
 Source4:		%{uname_r}-output-develfiles.list
 Requires:		kernel-firmware
 Requires(pre):		bootloader-utils
-Requires(pre):		mkinitrd
+Requires(pre):		mkinitrd-command
 Requires(pre):		module-init-tools
 BuildRequires:		module-init-tools
 %if %no_source
