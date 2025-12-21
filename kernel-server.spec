@@ -56,6 +56,7 @@ Requires:		kernel-firmware
 Requires(pre):		bootloader-utils
 Requires(pre):		mkinitrd-command
 Requires(pre):		module-init-tools
+BuildRequires:	make
 BuildRequires:		module-init-tools
 %if %no_source
 BuildRequires:		kernel-source = %{version}-%{mkrel %{source_release}}
